@@ -6,7 +6,7 @@ let database;
 
 async function initDb() {
 const client = await MongoClient.connect("mongodb://localhost:27017");
-database = client.db('first-api');
+database = client.db('second-api');
 }
 
 
