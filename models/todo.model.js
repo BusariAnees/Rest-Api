@@ -6,6 +6,14 @@ class Todo {
     this.id = id;
   }
 
+static  async getTodos() {
+ const todoDocuments =  await db.getDb().collection('todos').find().toArray
+
+ return todoDocuments.map(function(todoDocument) {
+  return new Todo(todoDocument.text, todoDocument._id );
+ })
+}
+
   save() {
     if (this.id) {
      const todoId = new mongodb.ObjectId(this.id);
@@ -22,7 +30,7 @@ class Todo {
       throw new Error('Tryin to delete todo without id!');
     }
     const todoId = new mongodb.ObjectId(this.id);
-    
+
     return db.getDb().collection('todos').deleteOne({});
   }
 }
