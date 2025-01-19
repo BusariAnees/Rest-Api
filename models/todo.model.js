@@ -1,4 +1,6 @@
 const mongodb = require('mongodb');
+const db = require('../data/database');
+
 
 class Todo {
   constructor(text, id) {
@@ -6,12 +8,12 @@ class Todo {
     this.id = id;
   }
 
-static  async getTodos() {
- const todoDocuments =  await db.getDb().collection('todos').find().toArray
+static  async getAllTodos() {
+ const todoDocuments =  await db.getDb().collection('todos').find().toArray();
 
  return todoDocuments.map(function(todoDocument) {
   return new Todo(todoDocument.text, todoDocument._id );
- })
+ });
 }
 
   save() {
@@ -31,7 +33,7 @@ static  async getTodos() {
     }
     const todoId = new mongodb.ObjectId(this.id);
 
-    return db.getDb().collection('todos').deleteOne({});
+    return db.getDb().collection('todos').deleteOne({_id: todoId});
   }
 }
 
